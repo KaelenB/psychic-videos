@@ -9,11 +9,11 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "docker-compose up",
+        "label": "npm: install",
         "type": "shell",
-        "detail": "docker-compose up",
-        "command": "docker-compose down && docker-compose up",
+        "command": "cd src && npm install --include=dev",
         "problemMatcher": [],
+        "detail": "install dependencies from package"
       }
     ]
   },
@@ -21,10 +21,14 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "type":"chrome",
-        "url": "http://localhost:8000",
-        "name": "Launch via docker",
-        "preLaunchTask": "docker-compose up",
+        "name": "Launch via NPM",
+        "request": "launch",
+        "runtimeArgs": ["run", "start"],
+        "runtimeExecutable": "npm",
+        "cwd": "${workspaceFolder}/src",
+        "skipFiles": ["<node_internals>/**"],
+        "preLaunchTask": "npm: install",
+        "type": "node"
       }
     ]
   }
