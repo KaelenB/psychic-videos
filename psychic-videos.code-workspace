@@ -11,7 +11,7 @@
       {
         "label": "npm: install",
         "type": "shell",
-        "command": "npm install",
+        "command": "cd src && npm install --include=dev",
         "problemMatcher": [],
         "detail": "install dependencies from package"
       }
@@ -25,6 +25,7 @@
         "request": "launch",
         "runtimeArgs": ["run", "start"],
         "runtimeExecutable": "npm",
+        "cwd": "${workspaceFolder}/src",
         "skipFiles": ["<node_internals>/**"],
         "preLaunchTask": "npm: install",
         "type": "node"

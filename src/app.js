@@ -9,8 +9,12 @@ const upload = multer({ dest: "uploads/" });
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
+
 app.get("/script.js", function (req, res) {
   res.sendFile(__dirname + "/script.js");
+});
+app.get("/styles.css", function (req, res) {
+  res.sendFile(__dirname + "/styles.css");
 });
 
 app.get("/video", function (req, res) {
@@ -35,14 +39,20 @@ app.get("/video", function (req, res) {
   videoStream.pipe(res);
 });
 
-app.post("/upload_files", upload.array("files"), uploadFiles);
-
-function uploadFiles(req, res) {
-  console.log(req.body);
-  console.log(req.files);
-  res.json({ message: "Successfully uploaded files" });
-}
-
+app.post(
+  "/upload_files",
+  upload.array("files"),
+  function uploadFiles(req, res) {
+    console.log(req.files);
+    for (let i = 0; i < req.files.length; i++) {
+      fs.renameSync(
+        req.files[i].path,
+        __dirname + "/uploads/" + req.files[i].originalname
+      );
+    }
+    res.json({ message: "Successfully uploaded files" });
+  }
+);
 
 app.listen(8000, function () {
   console.log("Listening on port 8000!");

@@ -7,7 +7,6 @@ function submitForm(e) {
   const name = document.getElementById("name");
   const files = document.getElementById("files");
   const formData = new FormData();
-  console.log('here')
   formData.append("name", name.value);
   for (let i = 0; i < files.files.length; i++) {
     formData.append("files", files.files[i]);
@@ -15,9 +14,6 @@ function submitForm(e) {
   fetch("http://localhost:8000/upload_files", {
     method: "POST",
     body: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   })
     .then((res) => console.log(res))
     .catch((err) => ("Error occured", err));
